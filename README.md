@@ -16,6 +16,11 @@ This is useless for anyone looking for easy to run bugfree script.
     
 Note: It was written specifically for jiit so passwords combinations checked are of type "aabbcc".
 
+#Finding Usernames
+    You can create username file manually or by mounting the smb server in terminal and running ls command on it.
+    Details can be found here 
+    http://askubuntu.com/questions/29535/how-do-i-access-a-mounted-windows-share-from-the-command-line   
+
 #Future work:
   1. Link both the scripts such that the output from post.py is passed to post2.py and all the usernames for which password was found are eliminated from username.txt
   2. Remove all the useless code from post.py and post2.py
