@@ -13,7 +13,7 @@ def send_request(request_type, *arg):
 if __name__ == "__main__":
     p = argv[1]
     fo=open("pass.txt","w")
-    with open('user.txt') as openfileobject:
+    with open('username.txt') as openfileobject:
         for line in openfileobject:
             line=line[:-1]
             # p="hhttgg"
