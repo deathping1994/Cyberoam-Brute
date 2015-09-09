@@ -1,6 +1,7 @@
 # Cyberoam-Brute
 
 A python script to carry out brute force attack on JIIT cyberoam portal.
+
 Update: Added a new script login.py for automatic login to cyberroam using passwords obtained from brut.py
 #Types of attack:
 1. Dictionary attack
