@@ -41,15 +41,18 @@ def login(filename):
             for user in users:
                 user=user[:-1]
                 res =send_request("login", user, filename[:-4])
-                if "successfully logged in" in res:
+                if "<message><![CDATA[You have successfully logged into JIIT Internet Server.]]></message>" in res:
+                    string = "Logged in using " + user
+                    os.system('notify-send ' + '"' + string + '"')
                     flag= True
                 while flag:
                     time.sleep(20)
                     if not loggedin(user):
                         res=send_request("login", user, filename[:-4])
-                        if not "successfully logged in" in res:
+                        if "<message><![CDATA[You have successfully logged into JIIT Internet Server.]]></message>" not in res:
                             flag= False
-            print("End of User list")
+            string = "End OF file Reached"
+            os.system('notify-send ' + '"' + string + '"')
 
 if __name__ == "__main__":
     if "login" in argv:
@@ -60,6 +63,8 @@ if __name__ == "__main__":
         os.kill(int(pid), signal.SIGKILL)
         res = send_request("logout", argv)
         if "logged off" in res:
+            string= "Logged out of Cyberroam"
+            os.system('notify-send ' + '"' + string + '"')
             print("Logout Request completed")
 
 __author__ = 'gaurav'
