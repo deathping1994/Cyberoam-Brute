@@ -1,9 +1,19 @@
+import signal
 import os
+import time
 from sys import argv
 from urllib import parse, request
 
-
 BASE_URL = "http://172.16.68.6:8090/login.xml"
+
+
+def loggedin(user):
+    url = "http://172.16.68.6:8090/live?" + "mode=192&username=" + str(user)
+    res = request.urlopen(url).read()
+    if "<ack><![CDATA[ack]]></ack>" in str(res):
+        return True
+    else:
+        return False
 
 
 def send_request(request_type, *arg):
@@ -13,41 +23,41 @@ def send_request(request_type, *arg):
     elif request_type == 'logout':
         print("Initiating logout request..")
         params = parse.urlencode({'mode': 193, 'username': arg[0]})
-
-    response = request.urlopen(BASE_URL, params.encode("ascii"))
+    response = request.urlopen(BASE_URL,params.encode('utf-8'))
     return str(response.read())
 
 
 def login(filename):
+    i = 0
     pid = os.fork()
     if pid != 0:
         fo = open("pid.txt", "w")
         fo.write(str(pid))
         fo.close()
         exit(0)
-    flag = 0
-    with open(filename, "r") as creds:
-        while True:
-            if flag == 0:
-                cred = creds.readline()
-                # user, passwd = cred.split(" ")
-                user = cred
-            res = send_request("login", user, "77uu88")
-            if "successfully logged" in res:
-                flag = 1
-                # print("logged in using %s", user)
-            else:
-                flag = 0
-
+    else:
+        flag = False
+        with open(filename,"r") as users:
+            for user in users:
+                user=user[:-1]
+                res =send_request("login", user, filename[:-4])
+                if "successfully logged in" in res:
+                    flag= True
+                while flag:
+                    time.sleep(20)
+                    if not loggedin(user):
+                        res=send_request("login", user, filename[:-4])
+                        if not "successfully logged in" in res:
+                            flag= False
+            print("End of User list")
 
 if __name__ == "__main__":
     if "login" in argv:
-        print(argv[2])
         login(argv[2])
     elif "logout" in argv:
-        fo = open("pid.txt","r")
+        fo = open("pid.txt", "r")
         pid = fo.readline()
-        os.kill(int(pid), 9)
+        os.kill(int(pid), signal.SIGKILL)
         res = send_request("logout", argv)
         if "logged off" in res:
             print("Logout Request completed")
