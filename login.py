@@ -29,6 +29,7 @@ def send_request(request_type, *arg):
 
 def login(filename):
     i = 0
+    print("inside login")
     pid = os.fork()
     if pid != 0:
         fo = open("pid.txt", "w")
@@ -37,22 +38,25 @@ def login(filename):
         exit(0)
     else:
         flag = False
-        with open(filename,"r") as users:
-            for user in users:
-                user=user[:-1]
-                res =send_request("login", user, filename[:-4])
-                if "<message><![CDATA[You have successfully logged into JIIT Internet Server.]]></message>" in res:
-                    string = "Logged in using " + user
-                    os.system('notify-send ' + '"' + string + '"')
-                    flag= True
-                while flag:
-                    time.sleep(20)
-                    if not loggedin(user):
-                        res=send_request("login", user, filename[:-4])
-                        if "<message><![CDATA[You have successfully logged into JIIT Internet Server.]]></message>" not in res:
-                            flag= False
-            string = "End OF file Reached"
-            os.system('notify-send ' + '"' + string + '"')
+        users=open(filename, "r")
+        while True:
+            user=users.readline()
+            if user == '':
+                users.seek(0,0)
+                user= users.read()
+                print (len(user))
+            user=user[:-1]
+            res =send_request("login", user, filename[:-4])
+            if "<message><![CDATA[You have successfully logged into JIIT Internet Server.]]></message>" in res:
+                string = "Logged in using " + user
+                os.system('notify-send ' + '"' + string + '"')
+                flag= True
+            while flag:
+                time.sleep(20)
+                if not loggedin(user):
+                    res=send_request("login", user, filename[:-4])
+                    if "<message><![CDATA[You have successfully logged into JIIT Internet Server.]]></message>" not in res:
+                        flag= False
 
 if __name__ == "__main__":
     if "login" in argv:
@@ -66,5 +70,7 @@ if __name__ == "__main__":
             string= "Logged out of Cyberroam"
             os.system('notify-send ' + '"' + string + '"')
             print("Logout Request completed")
-
+    else:
+        print("prob")
+        print(argv)
 __author__ = 'gaurav'
