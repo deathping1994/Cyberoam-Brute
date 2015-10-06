@@ -13,12 +13,12 @@ def send_request(request_type, *arg):
 if __name__ == "__main__":
     p = argv[1]
     print p
-    fo=open("pass.txt","w")
+    fo=open(p+".txt","w")
     with open('username.txt') as openfileobject:
         for line in openfileobject:
             line=line[:-1]
             data = send_request("login", line, p)
             if not "could not" in data:
-                fo.write(line+ " " + p + "\n")
+                fo.write(line+ "\n")
                 print line + " found for given password.."
     fo.close()
