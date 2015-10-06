@@ -12,7 +12,8 @@ Update: Added a new script login.py for automatic login to cyberroam using passw
   1. Run python post.py bruteforce in terminal/Powershell
   2. Use the correct passwords from step 1 in brut.py
   3. Now use login.py to login.Remember you must have python3 installed.
-  4. Command: python3 login.py login filename.txt (filename is stored as combination of password for eg: ddee44.txt)
+  
+`python3 login.py login filename.txt`
     
 Note: It was written specifically for jiit so passwords combinations checked are of type "aabbcc".
 
