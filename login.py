@@ -52,7 +52,7 @@ def login(filename):
                 os.system('notify-send ' + '"' + string + '"')
                 flag= True
             while flag:
-                time.sleep(20)
+                time.sleep(18)
                 if not loggedin(user):
                     res=send_request("login", user, filename[:-4])
                     if "<message><![CDATA[You have successfully logged into JIIT Internet Server.]]></message>" not in res:
