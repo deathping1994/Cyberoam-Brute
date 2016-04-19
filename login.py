@@ -38,7 +38,7 @@ def login(filename):
         exit(0)
     else:
         flag = False
-        users=open(filename, "r")
+        users=open("passwords/"+filename, "r")
         while True:
             user=users.readline()
             if user == '':
@@ -60,6 +60,15 @@ def login(filename):
 
 if __name__ == "__main__":
     if "login" in argv:
+        try:
+            fo = open("pid.txt", "r")
+            pid = fo.readline()
+            os.kill(int(pid), signal.SIGKILL)
+            fo.close()
+        except ProcessLookupError:
+            print ("No running process.\nTrying to login")
+        except IOError:
+            pass   
         login(argv[2])
     elif "logout" in argv:
         fo = open("pid.txt", "r")

@@ -2,6 +2,7 @@
 from urllib import urlencode
 from urllib2 import urlopen
 from sys import argv
+import os
 BASE_URL = "http://172.16.68.6:8090/login.xml"
 def send_request(request_type, *arg):
     if(request_type == 'login'):
@@ -13,7 +14,9 @@ def send_request(request_type, *arg):
 if __name__ == "__main__":
     p = argv[1]
     print p
-    fo=open(p+".txt","w")
+    if not os.path.exists("passwords"):
+        os.makedirs("passwords")
+    fo=open("passwords/"+p+".txt","w")
     with open('username.txt') as openfileobject:
         for line in openfileobject:
             line=line[:-1]
