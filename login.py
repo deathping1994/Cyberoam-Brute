@@ -1,4 +1,4 @@
-import signal,pdb
+import signal
 import os
 import time
 from sys import argv
@@ -25,7 +25,6 @@ def send_request(request_type, *arg):
         print("Initiating logout request..")
         params = parse.urlencode({'mode': 193, 'username': arg[0]})
         url = BASE_URL + "logout.xml"
-        pdb.set_trace()
         print (response)
     response = request.urlopen(url,params.encode('utf-8'))
     return str(response.read())
