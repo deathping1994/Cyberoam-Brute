@@ -7,7 +7,7 @@ Update: Added a new script login.py for automatic login to cyberroam using passw
 1. Dictionary attack
     Use script brut.py to carry out dictionary attack.You might need to make some changes to supply a list of passwords.
 2. Brute Force
-    Script checks all the possible combinations for a partcular usename and stores the correct password when found.
+    Script checks all the possible combinations for a particular usename and stores the correct password when found.
 #Ideal way to use:
   1. Run python post.py bruteforce in terminal/Powershell
   2. Use the correct passwords from step 1 in brut.py
